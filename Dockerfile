@@ -20,33 +20,23 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
   && rm -rf /var/lib/apt/lists/*
 
+# install latest azure cli
 RUN curl -LsS https://aka.ms/InstallAzureCLIDeb | bash 
 
 ARG TARGETARCH=amd64
 ARG AGENT_VERSION=2.185.1
 
-RUN pwsh \
-        -NoLogo \
-        -NoProfile \
-        -Command " \
-        Set-PSRepository PSGallery -InstallationPolicy Trusted; \
-        Install-Module -Name Az -AllowClobber -Scope AllUsers -Confirm:\$False -Force" \
-    # initialize PowerShell module cache
-    # invoke a nonexistent command to force PowerShell to perform complete module analysis
-    && pwsh -NoLogo -NoProfile -Command "try { IAmSureThisCommandDoesNotExist } catch { exit 0 }" \
-    && pwsh \
-        -NoLogo \
-        -NoProfile \
-        -Command " \
-        \$ErrorActionPreference = 'Stop' ; \
-        \$ProgressPreference = 'SilentlyContinue' ; \
-        while(!(Test-Path -Path \$env:PSModuleAnalysisCachePath)) {  \
-            Write-Host "'Waiting for $env:PSModuleAnalysisCachePath'" ; \
-            Start-Sleep -Seconds 6 ; \
-        }" \
-    #
-    # Clean up
-    && apt-get autoremove -y \
+# install required PowerShell modules
+RUN pwsh -Command Set-PSRepository -Name PSGallery -InstallationPolicy Trusted && \
+    pwsh -Command Install-Module -Name Az -RequiredVersion 5.3.1 -Scope AllUsers -Repository PSGallery -Confirm:\$False -Force && \
+    pwsh -Command Install-Module -Name Az.ResourceGraph -RequiredVersion 0.11.0 -Scope AllUsers -Repository PSGallery -Confirm:\$False -Force && \
+    pwsh -Command Install-Module -Name Az.Subscription -RequiredVersion 0.7.3 -Scope AllUsers -Repository PSGallery -Confirm:\$False -Force && \
+    pwsh -Command Install-Module -Name AzureAD -RequiredVersion 2.0.2.135 -Scope AllUsers -Repository PSGallery -Confirm:\$False -Force && \
+    pwsh -Command Install-Module -Name PSScriptAnalyzer -RequiredVersion 1.19.1 -Scope AllUsers -Repository PSGallery -Confirm:\$False -Force && \
+    pwsh -Command Install-Module -Name Pester -RequiredVersion 5.2.2 -Scope AllUsers -Repository PSGallery -Confirm:\$False -Force
+    
+# Clean up
+RUN apt-get autoremove -y \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 
