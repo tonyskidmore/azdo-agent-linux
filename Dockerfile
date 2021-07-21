@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     netcat \
     libssl1.0 \
     unzip \
+    wget \
   && rm -rf /var/lib/apt/lists/*
 
 RUN curl -LsS https://aka.ms/InstallAzureCLIDeb | bash \
@@ -24,6 +25,12 @@ RUN curl -LsS https://aka.ms/InstallAzureCLIDeb | bash \
 
 ARG TARGETARCH=amd64
 ARG AGENT_VERSION=2.185.1
+
+# Install Azure PowerShell modules
+RUN pwsh -c "&{Install-Module -Name Az -AllowClobber -Scope AllUsers -Force}"
+
+# Install az cli
+RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
 WORKDIR /azp
 RUN if [ "$TARGETARCH" = "amd64" ]; then \
