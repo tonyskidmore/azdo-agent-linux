@@ -20,17 +20,35 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
   && rm -rf /var/lib/apt/lists/*
 
-RUN curl -LsS https://aka.ms/InstallAzureCLIDeb | bash \
-  && rm -rf /var/lib/apt/lists/*
+RUN curl -LsS https://aka.ms/InstallAzureCLIDeb | bash 
 
 ARG TARGETARCH=amd64
 ARG AGENT_VERSION=2.185.1
 
-# Install Azure PowerShell modules
-RUN pwsh -c "&{Install-Module -Name Az -AllowClobber -Scope AllUsers -Force}"
-
-# Install az cli
-RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+RUN pwsh \
+        -NoLogo \
+        -NoProfile \
+        -Command " \
+        Set-PSRepository PSGallery -InstallationPolicy Trusted; \
+        Install-Module -Name Az -AllowClobber -Scope AllUsers -Confirm:\$False -Force" \
+    # initialize PowerShell module cache
+    # invoke a nonexistent command to force PowerShell to perform complete module analysis
+    && pwsh -NoLogo -NoProfile -Command "try { IAmSureThisCommandDoesNotExist } catch { exit 0 }" \
+    && pwsh \
+        -NoLogo \
+        -NoProfile \
+        -Command " \
+        \$ErrorActionPreference = 'Stop' ; \
+        \$ProgressPreference = 'SilentlyContinue' ; \
+        while(!(Test-Path -Path \$env:PSModuleAnalysisCachePath)) {  \
+            Write-Host "'Waiting for $env:PSModuleAnalysisCachePath'" ; \
+            Start-Sleep -Seconds 6 ; \
+        }" \
+    #
+    # Clean up
+    && apt-get autoremove -y \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /azp
 RUN if [ "$TARGETARCH" = "amd64" ]; then \
