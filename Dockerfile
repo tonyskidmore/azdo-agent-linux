@@ -31,7 +31,7 @@ RUN pwsh -Command Set-PSRepository -Name PSGallery -InstallationPolicy Trusted &
     pwsh -Command Install-Module -Name Az -RequiredVersion 5.3.1 -Scope AllUsers -Repository PSGallery -Confirm:\$False -Force && \
     pwsh -Command Install-Module -Name Az.ResourceGraph -RequiredVersion 0.11.0 -Scope AllUsers -Repository PSGallery -Confirm:\$False -Force && \
     pwsh -Command Install-Module -Name Az.Subscription -RequiredVersion 0.7.3 -Scope AllUsers -Repository PSGallery -Confirm:\$False -Force && \
-    pwsh -Command Install-Module -Name AzureAD -RequiredVersion 2.0.2.135 -Scope AllUsers -Repository PSGallery -Confirm:\$False -Force && \
+    pwsh -Command Install-Module -Name AzureADPreview -RequiredVersion 2.0.2.135 -Scope AllUsers -Repository PSGallery -Confirm:\$False -Force && \
     pwsh -Command Install-Module -Name PSScriptAnalyzer -RequiredVersion 1.19.1 -Scope AllUsers -Repository PSGallery -Confirm:\$False -Force && \
     pwsh -Command Install-Module -Name Pester -RequiredVersion 5.2.2 -Scope AllUsers -Repository PSGallery -Confirm:\$False -Force
     
