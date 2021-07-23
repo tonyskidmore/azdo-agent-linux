@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libssl1.0 \
     unzip \
     wget \
+    tree \
   && rm -rf /var/lib/apt/lists/*
 
 # install latest azure cli
