@@ -19,7 +19,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     unzip \
     wget \
     tree \
-  && rm -rf /var/lib/apt/lists/*
+    python3-pip \
+    python3.7
+    
+# update python3 and install checkov package
+RUN rm /usr/bin/python3 && \
+    ln -s python3.7 /usr/bin/python3 && \
+    python3 -m pip install --upgrade pip && \
+    python3 -m pip install --upgrade setuptools && \
+    python3 -m pip install checkov=="2.0.295"
 
 # install latest azure cli
 RUN curl -LsS https://aka.ms/InstallAzureCLIDeb | bash 
