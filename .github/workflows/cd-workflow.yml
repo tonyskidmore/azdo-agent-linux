@@ -22,10 +22,10 @@ jobs:
         run: docker build -t azdo-agent-linux .
 
       - name: Run the built image.
-        run: docker run --name test-container --entrypoint "/bin/sleep 60" -d --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro azdo-agent-linux
+        run: docker run --name test-container --entrypoint "/bin/sleep" -d --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro azdo-agent-linux 60
 
       - name: Verify tools are accessible in the built image.
-        run: docker exec --tty test-container env TERM=xterm checkov --version
+        run: docker exec --tty test-container env TERM=xterm tflint --version
 
   Build-and-Push-Docker-Image:
     runs-on: ubuntu-latest
