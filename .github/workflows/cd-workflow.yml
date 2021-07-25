@@ -25,7 +25,7 @@ jobs:
         run: docker run --name test-container -d --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro azdo-agent-linux
 
       - name: Verify Ansible is accessible in the built image.
-        run: docker exec --tty --entrypoint /bin/bash test-container env TERM=xterm checkov --version
+        run: docker exec --tty /bin/bash test-container env TERM=xterm checkov --version
 
   Build-and-Push-Docker-Image:
     runs-on: ubuntu-latest
