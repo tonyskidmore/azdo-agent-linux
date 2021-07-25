@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/powershell:ubuntu-18.04
 # To make it easier for build and release pipelines to run apt-get,
 # configure apt to not require confirmation (assume the -y argument by default)
 ENV DEBIAN_FRONTEND=noninteractive
-ARG checkov_version="2.0.295"
+ARG checkov_version="2.0.297"
 ARG tflint_version="v0.30.0"
 ARG tflint_azure_ruleset_version="0.11.0"
 
