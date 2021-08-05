@@ -24,7 +24,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
     tree \
     python3-pip \
-    python3.7
+    python3.7 \
+    python3-venv
     
 # update python3 and install checkov package
 RUN rm /usr/bin/python3 && \
