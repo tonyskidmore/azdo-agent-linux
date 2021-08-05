@@ -23,6 +23,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     unzip \
     wget \
     tree \
+    sshpass \
     python3-pip \
     python3.7 \
     python3.7-venv
