@@ -32,6 +32,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     lsb-release \
     gnupg
 
+# install azcopy
+RUN wget -O azcopy_v10.tar.gz https://aka.ms/downloadazcopy-v10-linux && \
+    tar -xf azcopy_v10.tar.gz --strip-components=1 && \
+    mv azcopy /usr/bin && \
+    rm azcopy_v10.tar.gz
+
 # install mysql-community-client
 RUN curl -fSL --connect-timeout 30 https://repo.mysql.com/mysql-apt-config_0.8.17-1_all.deb -o /tmp/mysql-apt-config_0.8.17-1_all.deb && \
     echo mysql-apt-config mysql-apt-config/select-server select mysql-8.0 | debconf-set-selections && \
