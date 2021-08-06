@@ -32,6 +32,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-pip \
     python3.7 \
     python3.7-venv \
+    lsb-release \
     mysql-community-client
     
 # update python3 and install checkov package
