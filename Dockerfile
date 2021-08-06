@@ -29,7 +29,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-pip \
     python3.7 \
     python3.7-venv \
-    lsb-release
+    lsb-release \
+    gnupg
 
 # install mysql-community-client
 RUN curl -fSL --connect-timeout 30 https://repo.mysql.com/mysql-apt-config_0.8.17-1_all.deb -o /tmp/mysql-apt-config_0.8.17-1_all.deb && \
