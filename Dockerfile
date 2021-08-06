@@ -9,10 +9,7 @@ ARG tflint_azure_ruleset_version="0.11.0"
 
 RUN echo "APT::Get::Assume-Yes \"true\";" > /etc/apt/apt.conf.d/90assumeyes
 
-RUN curl -fSL --connect-timeout 30 https://repo.mysql.com/mysql-apt-config_0.8.17-1_all.deb -o /tmp/mysql-apt-config_0.8.17-1_all.deb && \
-    echo mysql-apt-config mysql-apt-config/select-server select mysql-8.0 | debconf-set-selections && \
-    dpkg -i /tmp/mysql-apt-config_0.8.17-1_all.deb && \
-    rm -f /tmp/mysql-apt-config_0.8.17-1_all.deb
+
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
@@ -32,9 +29,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-pip \
     python3.7 \
     python3.7-venv \
-    lsb-release \
-    mysql-community-client
+    lsb-release
+
+# install mysql-community-client
+RUN curl -fSL --connect-timeout 30 https://repo.mysql.com/mysql-apt-config_0.8.17-1_all.deb -o /tmp/mysql-apt-config_0.8.17-1_all.deb && \
+    echo mysql-apt-config mysql-apt-config/select-server select mysql-8.0 | debconf-set-selections && \
+    dpkg -i /tmp/mysql-apt-config_0.8.17-1_all.deb && \
+    rm -f /tmp/mysql-apt-config_0.8.17-1_all.deb
     
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    mysql-community-client
+
 # update python3 and install checkov package
 RUN rm /usr/bin/python3 && \
     ln -s python3.7 /usr/bin/python3 && \
