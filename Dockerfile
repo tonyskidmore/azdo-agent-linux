@@ -21,6 +21,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libicu60 \
     libunwind8 \
     netcat \
+    openssl \
     libssl1.0 \
     unzip \
     wget \
@@ -30,7 +31,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3.7 \
     python3.7-venv \
     lsb-release \
-    gnupg
+    gnupg \
+    software-properties-common
 
 # install azcopy
 RUN wget -O azcopy_v10.tar.gz https://aka.ms/downloadazcopy-v10-linux && \
@@ -46,6 +48,20 @@ RUN curl -fSL --connect-timeout 30 https://repo.mysql.com/mysql-apt-config_0.8.1
     
 RUN apt-get update && apt-get install -y --no-install-recommends \
     mysql-community-client
+
+# install PHP 7.4
+RUN add-apt-repository ppa:ondrej/php && \
+    apt-get update && apt-get install -y --no-install-recommends \
+    php7.4 \
+    php7.4-common \
+    php7.4-bcmath \
+    php7.4-json \
+    php7.4-mbstring \
+    php7.4-curl \
+    php7.4-xml \
+    php7.4-mysql
+
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # update python3 and install checkov package
 RUN rm /usr/bin/python3 && \
