@@ -28,7 +28,7 @@ jobs:
         run: docker exec --tty test-container env TERM=xterm tflint --version
         
       - name: Verify certbot version
-        run: docker exec --tty test-container env TERM=xterm certbot --version
+        run: docker exec --tty test-container env TERM=xterm certbot
 
   Build-and-Push-Docker-Image:
     runs-on: ubuntu-latest
