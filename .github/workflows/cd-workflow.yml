@@ -26,6 +26,9 @@ jobs:
 
       - name: Verify tools are accessible in the built image.
         run: docker exec --tty test-container env TERM=xterm tflint --version
+        
+      - name: Verify certbot version
+        run: docker exec --tty test-container env TERM=xterm certbot --version
 
   Build-and-Push-Docker-Image:
     runs-on: ubuntu-latest
