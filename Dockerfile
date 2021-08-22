@@ -16,7 +16,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     jq \
     git \
-    certbot \
     iputils-ping \
     libcurl4 \
     libicu60 \
