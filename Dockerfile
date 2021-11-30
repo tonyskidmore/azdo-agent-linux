@@ -82,7 +82,7 @@ RUN wget https://raw.githubusercontent.com/terraform-linters/tflint/master/insta
 RUN curl -LsS https://aka.ms/InstallAzureCLIDeb | bash 
 
 ARG TARGETARCH=amd64
-ARG AGENT_VERSION=2.185.1
+ARG AGENT_VERSION=2.195.1
 
 # install required PowerShell modules
 RUN pwsh -Command Set-PSRepository -Name PSGallery -InstallationPolicy Trusted && \
@@ -100,9 +100,9 @@ RUN apt-get autoremove -y \
 
 WORKDIR /azp
 RUN if [ "$TARGETARCH" = "amd64" ]; then \
-      AZP_AGENTPACKAGE_URL=https://vstsagentpackage.azureedge.net/agent/${AGENT_VERSION}/vsts-agent-linux-x64-${AGENT_VERSION}.tar.gz; \
+      AZP_AGENTPACKAGE_URL=https://vstsagentpackage.azureedge.net/agent/${AGENT_VERSION}/pipelines-agent-linux-x64-${AGENT_VERSION}.tar.gz; \
     else \
-      AZP_AGENTPACKAGE_URL=https://vstsagentpackage.azureedge.net/agent/${AGENT_VERSION}/vsts-agent-linux-${TARGETARCH}-${AGENT_VERSION}.tar.gz; \
+      AZP_AGENTPACKAGE_URL=https://vstsagentpackage.azureedge.net/agent/${AGENT_VERSION}/pipelines-agent-linux-${TARGETARCH}-${AGENT_VERSION}.tar.gz; \
     fi; \
     curl -LsS "$AZP_AGENTPACKAGE_URL" | tar -xz
 
