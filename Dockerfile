@@ -41,6 +41,7 @@ RUN wget -O azcopy_v10.tar.gz https://aka.ms/downloadazcopy-v10-linux && \
     rm azcopy_v10.tar.gz
 
 # install mysql-community-client
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 467B942D3A79BD29
 RUN curl -fSL --connect-timeout 30 https://repo.mysql.com/mysql-apt-config_0.8.17-1_all.deb -o /tmp/mysql-apt-config_0.8.17-1_all.deb && \
     echo mysql-apt-config mysql-apt-config/select-server select mysql-8.0 | debconf-set-selections && \
     dpkg -i /tmp/mysql-apt-config_0.8.17-1_all.deb && \
