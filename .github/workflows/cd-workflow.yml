@@ -35,7 +35,7 @@ jobs:
           image-ref: 'azdo-agent-linux'
           format: 'table'
           # uncomment to fail on found issues with defined severity
-          exit-code: '1'
+          # exit-code: '1'
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'

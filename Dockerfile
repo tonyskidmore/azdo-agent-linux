@@ -27,8 +27,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     tree \
     sshpass \
     python3-pip \
-    python3.7 \
-    python3.7-venv \
+    python3.8-venv \
     lsb-release \
     gnupg \
     software-properties-common
@@ -64,9 +63,7 @@ RUN wget -O azcopy_v10.tar.gz https://aka.ms/downloadazcopy-v10-linux && \
 # COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # update python3 and install checkov package
-RUN rm /usr/bin/python3 && \
-    ln -s python3.7 /usr/bin/python3 && \
-    python3 -m pip install --upgrade pip && \
+RUN python3 -m pip install --upgrade pip && \
     python3 -m pip install --upgrade setuptools && \
     python3 -m pip install checkov=="$checkov_version"
 
