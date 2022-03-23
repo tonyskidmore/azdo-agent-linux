@@ -21,9 +21,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: debug
-        run: printenv
-
       - name: Test building image.
         run: docker build -t azdo-agent-linux .
 
