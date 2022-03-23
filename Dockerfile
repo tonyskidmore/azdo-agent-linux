@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/powershell:ubuntu-20.04
+FROM mcr.microsoft.com/powershell:ubuntu-18.04
 
 # To make it easier for build and release pipelines to run apt-get,
 # configure apt to not require confirmation (assume the -y argument by default)
@@ -17,17 +17,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     iputils-ping \
     libcurl4 \
-    libicu66 \
+    libicu60 \
     libunwind8 \
     netcat \
-    openssl \
-    libssl1.1 \
+    libssl1.0 \
     unzip \
     wget \
     tree \
     sshpass \
     python3-pip \
-    python3.8-venv \
+    python3.7 \
+    python3.7-venv \
     lsb-release \
     gnupg \
     software-properties-common
@@ -63,7 +63,9 @@ RUN wget -O azcopy_v10.tar.gz https://aka.ms/downloadazcopy-v10-linux && \
 # COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # update python3 and install checkov package
-RUN python3 -m pip install --upgrade pip && \
+RUN rm /usr/bin/python3 && \
+    ln -s python3.7 /usr/bin/python3 && \
+    python3 -m pip install --upgrade pip && \
     python3 -m pip install --upgrade setuptools && \
     python3 -m pip install checkov=="$checkov_version"
 
@@ -83,7 +85,7 @@ ARG AGENT_VERSION=2.200.2
 
 # install required PowerShell modules
 RUN pwsh -Command Set-PSRepository -Name PSGallery -InstallationPolicy Trusted && \
-    pwsh -Command Install-Module -Name Az -RequiredVersion 5.3.1 -Scope AllUsers -Repository PSGallery -Confirm:\$False -Force && \
+    pwsh -Command Install-Module -Name Azure -RequiredVersion 5.3.1 -Scope AllUsers -Repository PSGallery -Confirm:\$False -Force && \
     pwsh -Command Install-Module -Name Az.ResourceGraph -RequiredVersion 0.12.0 -Scope AllUsers -Repository PSGallery -Confirm:\$False -Force && \
     pwsh -Command Install-Module -Name Az.Subscription -RequiredVersion 0.8.1 -Scope AllUsers -Repository PSGallery -Confirm:\$False -Force && \
     pwsh -Command Install-Module -Name VSTeam -RequiredVersion 7.6.1 -Scope AllUsers -Repository PSGallery -Confirm:\$False -Force && \
