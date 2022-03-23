@@ -17,11 +17,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     iputils-ping \
     libcurl4 \
-    libicu60 \
+    libicu66 \
     libunwind8 \
     netcat \
     openssl \
-    libssl1.0 \
+    libssl1.1 \
     unzip \
     wget \
     tree \
