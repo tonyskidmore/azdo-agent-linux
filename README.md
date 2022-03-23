@@ -3,7 +3,7 @@ Azure DevOps Self Hosted Agent Container Image
 
 ## Overview
 
-This repository contains a `Dockerfile` and a `start.sh` script based on [Run a self-hosted agent in Docker](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/docker?view=azure-devops#linux).  When built using a [GitHub Actions](https://docs.github.com/en/actions) workflow a container images is created and is accessible at `ghcr.io/tonyskidmore/azdo-agent-linux:latest`.  All available versions can be view in [View and manage all versions](https://github.com/tonyskidmore/azdo-agent-linux/pkgs/container/azdo-agent-linux/versions).  
+This repository contains a `Dockerfile` and a `start.sh` script based on [Run a self-hosted agent in Docker](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/docker?view=azure-devops#linux).  When built using a [GitHub Actions](https://docs.github.com/en/actions) workflow a container images is created and is accessible at `ghcr.io/tonyskidmore/azdo-agent-linux:latest`.  All available versions can be viewed in [View and manage all versions](https://github.com/tonyskidmore/azdo-agent-linux/pkgs/container/azdo-agent-linux/versions).  
 
 Normally the preferred solution would be provided by Azure Container Registry.  However, this method highlights a mechanism for using the [GitHub Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry) to provide a similar facility.  
 
